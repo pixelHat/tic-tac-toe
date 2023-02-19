@@ -1,5 +1,7 @@
 <main>
-  <slot />
+  <div>
+    <slot />
+  </div>
 </main>
 
 <style>
@@ -20,6 +22,28 @@
     font-family: var(--ff);
     font-weight: var(--fw-normal);
     font-size: 0.875rem;
-    line-height: 0.8px;
+    letter-spacing: 0.8px;
+    padding-inline: 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--clr-dark-navy);
+  }
+  :global(*) {
+    margin: 0;
+    padding: 0;
+  }
+  :global(button) {
+    border: none;
+    background: transparent;
+    color: inherit;
+  }
+
+  @media (min-width: 460px) {
+    main div {
+      min-width: 460px;
+      margin-inline: auto;
+    }
   }
 </style>
