@@ -3,4 +3,7 @@
 </p>
 
 <style>
+  p {
+    color: inherit;
+  }
 </style>

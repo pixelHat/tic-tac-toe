@@ -1,12 +1,14 @@
 <script lang="ts">
+  import Heading from "./heading.svelte";
+  import Text from "./text.svelte";
   export let title: string;
   export let score: number;
   export let color: 'blue'|'yellow'|'silver';
 </script>
 
 <article class={color}>
-  <h1>{title}</h1>
-  <p>{score}</p>
+  <Text>{title}</Text>
+  <Heading as="h2">{score}</Heading>
 </article>
 
 <style>
@@ -23,23 +25,8 @@
     padding-block: 0.75rem;
     border-radius: 0.9375rem;
     text-align: center;
-  }
-  article h1 {
     color: var(--clr-dark-navy);
     font-size: 0.8rem;
     text-transform: uppercase;
-  }
-  article p {
-    color: var(--clr-dark-navy);
-    font-size: 1.25rem;
-    font-weight: var(--fw-bold);
-  }
-  @media (min-width: 460px) {
-    article h1 {
-      font-size: 0.875rem;
-    }
-    article p {
-      font-size: 1.5rem;
-    }
   }
 </style>

@@ -13,7 +13,7 @@
   button {
     --box-shadow-color: #6B8997;
     --bg: var(--clr-silver);
-    --bg-hover: red;
+    --bg-hover: var(--clr-silver-hover);
     display: block;
     font-weight: var(--fw-bold);
     font-size: 1.25rem;

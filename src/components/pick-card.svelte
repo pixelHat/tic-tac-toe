@@ -5,6 +5,7 @@
   import IconOutlineO from "./icon-outline-o.svelte";
   import IconOutlineX from "./icon-outline-x.svelte";
   import IconX from "./icon-x.svelte";
+  import Text from "./text.svelte";
 
   let is_x_selected = true;
 
@@ -14,8 +15,10 @@
 </script>
 
 <Box>
-  <div>
-    <Heading as="h4" color="silver">PICK PLAYER 1’S MARK</Heading>
+  <div class="container">
+    <header>
+      <Heading as="h4">PICK PLAYER 1’S MARK</Heading>
+    </header>
     <section class="picker">
       <button class:selected={is_x_selected} on:click={() => select_mark("x")}>
         {#if is_x_selected }
@@ -32,12 +35,14 @@
         {/if}
       </button>
     </section>
-    <p>REMEMBER : X GOES FIRST</p>
+    <div class="remember">
+      <Text>REMEMBER : X GOES FIRST</Text>
+    </div>
   </div>
 </Box>
 
 <style>
-  div {
+  .container {
     text-align: center;
     padding: 1.5rem;
     border: 0.625rem;
@@ -68,9 +73,12 @@
     background-color: rgba(168, 191, 201, 0.05);
     border-radius: 0.625rem;
   }
-  p {
+  .remember {
     color: var(--clr-silver);
     opacity: 0.5;
     margin-block-start: 1.0625rem;
+  }
+  header {
+    color: var(--clr-silver);
   }
 </style>

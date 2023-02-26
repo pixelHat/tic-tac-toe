@@ -1,8 +1,12 @@
 <script lang="ts">
   import Board from "../../components/board.svelte";
   import GameHeader from "../../components/game-header.svelte";
+  import OverlayGameEnd from "../../components/overlay-game-end.svelte";
+  import Overlay from "../../components/overlay.svelte";
   import Scores from "../../components/scores.svelte";
+  import { is_overlay_open } from "../../stores/OverlayStore";
   import type { Board as BoardType } from "../../types/Board";
+  import { Feedback } from "../../types/Winner";
 
   let board: BoardType = [
     ' ', ' ', ' ',
@@ -16,6 +20,8 @@
     board[event.detail.index] = current_player;
     console.log(" plays", event.detail.index);
   }
+
+  is_overlay_open.set(true);
 </script>
 
 <div>
@@ -25,6 +31,12 @@
   </section>
   <Scores />
 </div>
+
+{#if $is_overlay_open }
+  <Overlay>
+    <OverlayGameEnd feedback={Feedback.PLAYER1} winner={'x'} />
+  </Overlay>
+{/if}
 
 <style>
   div {
