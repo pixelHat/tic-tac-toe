@@ -21,7 +21,7 @@
   }
   article {
     padding-block: 0.75rem;
-    border-radius: 0.5rem;
+    border-radius: 0.9375rem;
     text-align: center;
   }
   article h1 {

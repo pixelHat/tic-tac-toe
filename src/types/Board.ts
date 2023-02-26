@@ -3,5 +3,6 @@ type FixedSizeArray<N extends number, T> = N extends 0 ? never[] : {
   length: N;
 } & Array<T>;
 
-export type Cell = "o" | "x" | " ";
+export type Mark = "o" | "x";
+export type Cell = Mark | " ";
 export type Board = FixedSizeArray<9, Cell>;

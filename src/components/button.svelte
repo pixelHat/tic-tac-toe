@@ -1,18 +1,20 @@
 <script lang="ts">
   export let type: "primary"|"secondary"|"" = "";
+  export let fixedSize: boolean = false;
+  export let size: "xs"|"lg" = "lg";
+  $: className = `${type} ${size}`
 </script>
 
-<button class={type}>
+<button class={className} class:fixed={fixedSize}>
   <slot></slot>
 </button>
 
 <style>
   button {
-    --border-bottom: 8px;
     --box-shadow-color: #6B8997;
     --bg: var(--clr-silver);
     --bg-hover: red;
-    display: inline-block;
+    display: block;
     font-weight: var(--fw-bold);
     font-size: 1.25rem;
     letter-spacing: 1.25px;
@@ -20,7 +22,7 @@
     color: var(--clr-dark-navy);
     background-color: var(--bg);
     box-shadow: inset 0px calc(-1 * var(--border-bottom)) 0px var(--box-shadow-color);
-    border-radius: 0.9375rem;
+    border-radius: var(--border-radius);
     padding-block-start: 0.875rem;
     padding-block-end: calc(0.875rem + var(--border-bottom));
     cursor: pointer;
@@ -37,5 +39,18 @@
     --bg: var(--clr-light-blue);
     --bg-hover: var(--clr-light-blue-hover);
     --box-shadow-color: #118C87;
+  }
+  .fixed{
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .lg {
+    --border-bottom: 8px;
+    --border-radius: 10px;
+  }
+  .xs {
+    --border-bottom: 4px;
+    --border-radius: 5px;
   }
 </style>
