@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "../components/button.svelte";
-import PickCard from "../components/pick-card.svelte";
+  import PickCard from "../components/pick-card.svelte";
 </script>
 
 <img src="/logo.svg" alt="">

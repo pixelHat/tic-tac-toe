@@ -2,8 +2,8 @@
   import Box from "../components/box.svelte";
   import Heading from "./heading.svelte";
   import IconO from "./icon-o.svelte";
-	import IconOutlineO from "./icon-outline-o.svelte";
-	import IconOutlineX from "./icon-outline-x.svelte";
+  import IconOutlineO from "./icon-outline-o.svelte";
+  import IconOutlineX from "./icon-outline-x.svelte";
   import IconX from "./icon-x.svelte";
 
   let is_x_selected = true;
