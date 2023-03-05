@@ -1,14 +1,12 @@
 <script>
+  import { x_wins, o_wins, ties } from "../stores/ScoreStore";
   import Score from "./score.svelte";
-  let player1 = 3;
-  let player2 = 5;
-  let ties = 10;
 </script>
 
 <section>
-  <Score title="x (YOU)" score={player1} color="blue" />
-  <Score title="ties" score={ties} color="silver" />
-  <Score title="o (CPU)" score={player2} color="yellow" />
+  <Score title="x (YOU)" score={$x_wins} color="blue" />
+  <Score title="ties" score={$o_wins} color="silver" />
+  <Score title="o (CPU)" score={$ties} color="yellow" />
 </section>
 
 <style>

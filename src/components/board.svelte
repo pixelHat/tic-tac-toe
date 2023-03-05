@@ -1,13 +1,16 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import type { Board } from "../types/Board";
   import BoardField from "./board-field.svelte";
 
   export let board: Board;
+  export let disabled: boolean = false;
 
   const dispatch = createEventDispatcher();
 
   function click(index: number) {
+    console.log(disabled)
+    if (disabled) return;
     dispatch('select', { index });
   }
 </script>

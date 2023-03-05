@@ -2,39 +2,66 @@
   import Board from "../../components/board.svelte";
   import GameHeader from "../../components/game-header.svelte";
   import OverlayGameEnd from "../../components/overlay-game-end.svelte";
+  import OverlayRestart from "../../components/overlay-restart.svelte";
   import Overlay from "../../components/overlay.svelte";
   import Scores from "../../components/scores.svelte";
+  import TicTacToe from "../../stores/GameStore";
   import { is_overlay_open } from "../../stores/OverlayStore";
-  import type { Board as BoardType } from "../../types/Board";
+  import { o_wins, ties, x_wins } from "../../stores/ScoreStore";
+	import type { Mark } from "../../types/Board";
   import { Feedback } from "../../types/Winner";
 
-  let board: BoardType = [
-    ' ', ' ', ' ',
-    'x', 'o', 'x',
-    ' ', 'o', ' ',
-  ]
+  const is_single_play = true;
+  const first_player_mark = "x";
 
-  let current_player: 'x'|'o' = 'x';
+  const game = new TicTacToe();
 
   function select(event: CustomEvent) {
-    board[event.detail.index] = current_player;
-    console.log(" plays", event.detail.index);
+    game.move(event.detail.index)
+
   }
 
-  is_overlay_open.set(true);
+  function player_winner(mark: Mark) {
+    const players = is_single_play ? [Feedback.WON, Feedback.LOST] : [Feedback.PLAYER1, Feedback.PLAYER2];
+    if (mark === first_player_mark) {
+      return players[0];
+    }
+    return players[1];
+  }
+
+  function create_feedback() {
+    if (game.winner === "x") {
+      x_wins.update(v => v + 1);
+      return player_winner("x");
+    } else if (game.winner === "o") {
+      o_wins.update(v => v + 1);
+      return player_winner("o");
+    } else {
+      ties.update(v => v + 1);
+      return Feedback.DRAW;
+    }
+  }
+
+  $: if (!$game.is_playing) {
+    is_overlay_open.set(true);
+  }
+
+
 </script>
 
 <div>
-  <GameHeader />
+  <GameHeader mark={$game.current_mark} />
   <section>
-    <Board {board} on:select={select} />
+    <Board board={$game.board} disabled={!$game.is_playing} on:select={select} />
   </section>
   <Scores />
 </div>
 
 {#if $is_overlay_open }
   <Overlay>
-    <OverlayGameEnd feedback={Feedback.PLAYER1} winner={'x'} />
+    {#if !$game.is_playing }
+      <OverlayGameEnd feedback={create_feedback()} winner={$game.winner} />
+    {/if}
   </Overlay>
 {/if}
 
