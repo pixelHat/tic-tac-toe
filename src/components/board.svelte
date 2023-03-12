@@ -1,10 +1,13 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+	import GameStore from "../stores/GameStore";
   import type { Board } from "../types/Board";
   import BoardField from "./board-field.svelte";
 
   export let board: Board;
   export let disabled: boolean = false;
+
+  const game = GameStore.getInstance();
 
   const dispatch = createEventDispatcher();
 
@@ -17,7 +20,7 @@
 <section>
 {#each board as cell, idx}
   <button on:click={() => click(idx)}>
-    <BoardField {cell} />
+    <BoardField {cell} highlight={$game.winner_squares?.includes(idx)} />
   </button>
 {/each}
 </section>

@@ -1,6 +1,7 @@
 <script lang="ts">
   export let size: "xs"|"lg" = "lg";
-  $: className = `${size}`
+  export let color: "yellow"|"blue"|undefined = undefined;
+  $: className = `${size} ${color}`
 </script>
 
 <section class={className}>
@@ -9,9 +10,11 @@
 
 <style>
   section {
+    --box-bg: var(--clr-semi-dark-navy);
+    --box-bg-shadow: #10212A;
     height: 100%;
-    background-color: var(--clr-semi-dark-navy);
-    box-shadow: inset 0px calc(-1 * var(--shadow-size)) 0px #10212A;
+    background-color: var(--box-bg);
+    box-shadow: inset 0px calc(-1 * var(--shadow-size)) 0px var(--box-bg-shadow);
     border-radius: var(--border-radius);
     padding-block-end: var(--shadow-size);
   }
@@ -22,5 +25,13 @@
   .xs {
     --shadow-size: 4px;
     --border-radius: 5px;
+  }
+  .yellow {
+    --box-bg: var(--clr-light-yellow);
+    --box-bg-shadow: var(--clr-light-yellow-hover);
+  }
+  .blue {
+    --box-bg: var(--clr-light-blue);
+    --box-bg-shadow: var(--clr-light-blue-hover);
   }
 </style>

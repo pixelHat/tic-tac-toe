@@ -5,7 +5,7 @@
   import OverlayRestart from "../../components/overlay-restart.svelte";
   import Overlay from "../../components/overlay.svelte";
   import Scores from "../../components/scores.svelte";
-  import TicTacToe from "../../stores/GameStore";
+  import GameStore from "../../stores/GameStore";
   import { is_overlay_open } from "../../stores/OverlayStore";
   import { o_wins, ties, x_wins } from "../../stores/ScoreStore";
   import type { Mark } from "../../types/Board";
@@ -17,12 +17,12 @@
   const is_single_play = params.get("multiplayer") == null;
   const first_player_mark: Mark = params.get("player1mark") === "x" ? "x" : "o";
 
-  let game = new TicTacToe();
+  let game = GameStore.getInstance();
   let is_restart_modal_open = false;
 
   function next_game() {
     is_overlay_open.set(false);
-    game = new TicTacToe();
+    game.restart();
   }
 
   function quit_game() {
@@ -32,7 +32,7 @@
   function restart_game() {
     is_overlay_open.set(false);
     is_restart_modal_open = false;
-    game = new TicTacToe();
+    game.restart();
   }
 
   function cancel() {

@@ -15,13 +15,23 @@ const WINNER_PATTERNS = [
 
 export default class TicTacToe {
   private _board = new Array(9).fill(" ") as Board;
+  private static instance: TicTacToe;
+
   public current_mark: Mark = "x";
   public is_playing = true;
   public winner:Mark|null = null;
+  public winner_squares:number[] = [];
   private store: Writable<TicTacToe>;
 
-  constructor() {
+  private constructor() {
     this.store = writable(this);
+  }
+
+  public static getInstance() {
+    if (!TicTacToe.instance) {
+        TicTacToe.instance = new TicTacToe();
+    }
+    return TicTacToe.instance;
   }
 
   move(idx: number) {
@@ -40,6 +50,8 @@ export default class TicTacToe {
     this.current_mark = "x";
     this._board = new Array(9).fill(" ") as Board;
     this.winner = null;
+    this.winner_squares = [];
+    this.store.set(this);
   }
 
   private swap_mark() {
@@ -48,11 +60,15 @@ export default class TicTacToe {
 
   private check_winner() {
     if (!this.is_playing) return;
-    if (this.check_win("x")) {
+    const x_won = this.find_match_winner("x");
+    const o_won = this.find_match_winner("o");
+    if (x_won) {
       this.winner = "x";
+      this.winner_squares = x_won;
       this.is_playing = false;
-    } else if (this.check_win("o")) {
+    } else if (o_won) {
       this.winner = "o";
+      this.winner_squares = o_won;
       this.is_playing = false;
     }
   }
@@ -62,8 +78,8 @@ export default class TicTacToe {
     this.is_playing = this._board.some(cell => cell === " ");
   }
 
-  private check_win(mark: Mark) {
-    return WINNER_PATTERNS.some(
+  private find_match_winner(mark: Mark) {
+    return WINNER_PATTERNS.find(
       pattern => pattern.every(index => this._board[index] === mark)
     )
   }

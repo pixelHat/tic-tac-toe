@@ -27,7 +27,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     background-color: var(--clr-dark-navy);
   }
   :global(*) {
