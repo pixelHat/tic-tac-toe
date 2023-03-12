@@ -1,94 +1,90 @@
-import type { Board, Mark } from "../types/Board";
+import type { Mark } from "../types/Board";
 import _ from "lodash";
 import { writable, type Subscriber, type Writable } from "svelte/store";
+import Minimax from "../game/minimax";
+import TicTacToe from "../game/tictactoe";
 
-const WINNER_PATTERNS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-];
+export default class GameStore {
+  private static instance: GameStore;
+  private ticTacToe: TicTacToe;
+  private store: Writable<GameStore>;
+  private ia = new Minimax(true);
+  private vsIA = false;
 
-export default class TicTacToe {
-  private _board = new Array(9).fill(" ") as Board;
-  private static instance: TicTacToe;
-
-  public current_mark: Mark = "x";
   public is_playing = true;
   public winner:Mark|null = null;
   public winner_squares:number[] = [];
-  private store: Writable<TicTacToe>;
 
   private constructor() {
     this.store = writable(this);
+    this.ticTacToe = new TicTacToe();
   }
 
   public static getInstance() {
-    if (!TicTacToe.instance) {
-        TicTacToe.instance = new TicTacToe();
+    if (!GameStore.instance) {
+        GameStore.instance = new GameStore();
     }
-    return TicTacToe.instance;
+    return GameStore.instance;
+  }
+
+  newGameVSCPU(cpu_mark: Mark) {
+    this.restart();
+    this.vsIA = true;
+    const should_minimaze = cpu_mark === "o";
+    this.ia = new Minimax(should_minimaze);
+    if (!should_minimaze) {
+      const move = this.ia.move(this.ticTacToe);
+      this.ticTacToe.move(move);
+    }
+  }
+
+  newGameTwoPlayer() {
+    this.restart();
+    this.vsIA = false;
   }
 
   move(idx: number) {
-    if (this.board[idx] !== " ") {
-      return null
+    const is_valid_move = this.ticTacToe.move(idx);
+    if (is_valid_move === null) return null;
+    this.validate();
+    this.store.set(this);
+    if (this.is_playing && this.vsIA) {
+      const move = this.ia.move(this.ticTacToe);
+      this.ticTacToe.move(move);
+      this.validate();
     }
-    this._board[idx] = this.current_mark;
-    this.swap_mark();
-    this.check_winner();
-    this.check_draw();
     this.store.set(this);
   }
 
   restart() {
     this.is_playing = true;
-    this.current_mark = "x";
-    this._board = new Array(9).fill(" ") as Board;
     this.winner = null;
     this.winner_squares = [];
+    this.ticTacToe.restart();
     this.store.set(this);
   }
 
-  private swap_mark() {
-    this.current_mark = this.current_mark === "x" ? "o" : "x";
-  }
-
-  private check_winner() {
-    if (!this.is_playing) return;
-    const x_won = this.find_match_winner("x");
-    const o_won = this.find_match_winner("o");
-    if (x_won) {
-      this.winner = "x";
-      this.winner_squares = x_won;
-      this.is_playing = false;
-    } else if (o_won) {
-      this.winner = "o";
-      this.winner_squares = o_won;
-      this.is_playing = false;
-    }
-  }
-
-  private check_draw() {
-    if (!this.is_playing) return;
-    this.is_playing = this._board.some(cell => cell === " ");
-  }
-
-  private find_match_winner(mark: Mark) {
-    return WINNER_PATTERNS.find(
-      pattern => pattern.every(index => this._board[index] === mark)
-    )
+  subscribe(subscriber: Subscriber<GameStore>) {
+    return this.store.subscribe(subscriber);
   }
 
   get board() {
-    return _.cloneDeep(this._board);
+    return _.cloneDeep(this.ticTacToe.board);
   }
 
-  subscribe(subscriber: Subscriber<TicTacToe>) {
-    return this.store.subscribe(subscriber);
+  get current_mark() {
+    return this.ticTacToe.current_mark;
+  }
+
+  private validate() {
+    const has_winner = this.ticTacToe.winner;
+    const draw = this.ticTacToe.draw;
+    if (has_winner) {
+      this.winner = has_winner;
+      this.is_playing = false;
+    } else if (draw) {
+      this.winner = null;
+      this.is_playing = false;
+    }
   }
 }

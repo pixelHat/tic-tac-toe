@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ButtonGroup from "./button-group.svelte";
   import Button from "./button.svelte";
   import Heading from "./heading.svelte";
 
@@ -12,10 +13,10 @@
       Restart Game?
     </div>
   </Heading>
-  <div class="buttons">
+  <ButtonGroup>
     <Button on:click={onNegative}><span class="padding">NO, CANCEL</span></Button>
     <Button on:click={onPositive} type="primary"><span class="padding">YES, RESTART</span></Button>
-  </div>
+  </ButtonGroup>
 </div>
 
 <style>
@@ -34,10 +35,5 @@
     margin-block-start: 1rem;
     color: var(--clr-silver);
     text-transform: uppercase;
-  }
-  .buttons {
-    display: flex;
-    column-gap: 1rem;
-    margin-block-start: 1.5rem;
   }
 </style>

@@ -5,28 +5,19 @@
 
   let player1mark: Mark = "x";
 
-  function start_game(params: string) {
-    window.location.href = `/game?${params}`;
-  }
-
-  function start_game_vs_CPU() {
-    return start_game(`player1mark=${player1mark}`)
-  }
-
-  function start_game_vs_player() {
-    return start_game(`player1mark=${player1mark}&multiplayer=true`)
-  }
+  $: vs_cpu = `/game?player1mark=${player1mark}`;
+  $: two_players = `/game?player1mark=${player1mark}&multiplayer=true`;
 </script>
 
 <img src="/logo.svg" alt="">
 <section class="pick-card">
-  <PickCard selected={player1mark} />
+  <PickCard on:change={(event) => player1mark = event.detail.value} selected={player1mark} />
 </section>
 <section class="buttons">
-  <Button on:click={start_game_vs_CPU} type="primary">
-      NEW GAME (VS CPU)
+  <Button type="primary">
+      <a href={vs_cpu}>NEW GAME (VS CPU)</a>
   </Button>
-  <Button on:click={start_game_vs_player} type="secondary">NEW GAME  (VS PLAYER)</Button>
+  <Button type="secondary"><a href={two_players}>NEW GAME  (VS PLAYER)</a></Button>
 </section>
 
 <style>
@@ -44,6 +35,10 @@
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 1rem;
+  }
+  a {
+    display: inline-block;
+    width: 100%;
   }
 
   @media (min-width: 460px) {

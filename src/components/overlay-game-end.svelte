@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Mark } from "../types/Board";
   import { Feedback } from "../types/Winner";
+  import ButtonGroup from "./button-group.svelte";
   import Button from "./button.svelte";
   import Heading from "./heading.svelte";
   import IconO from "./icon-o.svelte";
@@ -36,10 +37,10 @@
       {/if}
     </div>
   </Heading>
-  <div class="buttons">
+  <ButtonGroup>
     <Button on:click={onQuit}><span class="padding">QUIT</span></Button>
     <Button on:click={onNext} type="primary"><span class="padding">NEXT ROUND</span></Button>
-  </div>
+  </ButtonGroup>
 </div>
 
 <style>

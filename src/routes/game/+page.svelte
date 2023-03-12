@@ -12,17 +12,21 @@
   import { Feedback } from "../../types/Winner";
 
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
   const params = $page.url.searchParams;
   const is_single_play = params.get("multiplayer") == null;
   const first_player_mark: Mark = params.get("player1mark") === "x" ? "x" : "o";
 
   let game = GameStore.getInstance();
+
   let is_restart_modal_open = false;
+
+  onMount(new_game);
 
   function next_game() {
     is_overlay_open.set(false);
-    game.restart();
+    new_game();
   }
 
   function quit_game() {
@@ -32,12 +36,20 @@
   function restart_game() {
     is_overlay_open.set(false);
     is_restart_modal_open = false;
-    game.restart();
+    new_game();
   }
 
   function cancel() {
     is_overlay_open.set(false);
     is_restart_modal_open = false;
+  }
+
+  function new_game() {
+    if (!is_single_play) {
+      game.newGameTwoPlayer();
+    } else {
+      game.newGameVSCPU(first_player_mark === "x" ? "o" : "x");
+    }
   }
 
   function open_restart_modal() {

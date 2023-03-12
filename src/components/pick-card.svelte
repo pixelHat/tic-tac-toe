@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
   import Box from "../components/box.svelte";
   import type { Mark } from "../types/Board";
   import Heading from "./heading.svelte";
@@ -14,6 +15,15 @@
 
   function select_mark(mark: "x"|"o") {
     selected = mark;
+    onChange();
+  }
+
+  const dispatch = createEventDispatcher();
+
+  function onChange() {
+    dispatch('change', {
+      value: selected
+    });
   }
 </script>
 
@@ -25,16 +35,16 @@
     <section class="picker">
       <button class:selected={is_x_selected} on:click={() => select_mark("x")}>
         {#if is_x_selected }
-          <IconOutlineX size="32" />
+          <IconOutlineX color="silver" size="32" />
         {:else }
           <IconX size="32" />
         {/if}
       </button>
       <button class:selected={!is_x_selected} on:click={() => select_mark("o")}>
         {#if !is_x_selected }
-          <IconO size="32" />
+          <IconOutlineO color="silver" size="32"/>
         {:else}
-          <IconOutlineO size="32"/>
+          <IconO size="32" />
         {/if}
       </button>
     </section>
