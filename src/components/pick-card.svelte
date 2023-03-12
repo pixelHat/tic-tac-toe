@@ -1,5 +1,6 @@
 <script lang="ts">
   import Box from "../components/box.svelte";
+  import type { Mark } from "../types/Board";
   import Heading from "./heading.svelte";
   import IconO from "./icon-o.svelte";
   import IconOutlineO from "./icon-outline-o.svelte";
@@ -7,10 +8,12 @@
   import IconX from "./icon-x.svelte";
   import Text from "./text.svelte";
 
-  let is_x_selected = true;
+  export let selected: Mark = "x";
+
+  $: is_x_selected = selected === "x";
 
   function select_mark(mark: "x"|"o") {
-    is_x_selected = mark === "x";
+    selected = mark;
   }
 </script>
 

@@ -8,13 +8,42 @@
   import TicTacToe from "../../stores/GameStore";
   import { is_overlay_open } from "../../stores/OverlayStore";
   import { o_wins, ties, x_wins } from "../../stores/ScoreStore";
-	import type { Mark } from "../../types/Board";
+  import type { Mark } from "../../types/Board";
   import { Feedback } from "../../types/Winner";
 
-  const is_single_play = true;
-  const first_player_mark = "x";
+  import { page } from "$app/stores";
 
-  const game = new TicTacToe();
+  const params = $page.url.searchParams;
+  const is_single_play = params.get("multiplayer") == null;
+  const first_player_mark: Mark = params.get("player1mark") === "x" ? "x" : "o";
+
+  let game = new TicTacToe();
+  let is_restart_modal_open = false;
+
+  function next_game() {
+    is_overlay_open.set(false);
+    game = new TicTacToe();
+  }
+
+  function quit_game() {
+    window.location.href = "/";
+  }
+
+  function restart_game() {
+    is_overlay_open.set(false);
+    is_restart_modal_open = false;
+    game = new TicTacToe();
+  }
+
+  function cancel() {
+    is_overlay_open.set(false);
+    is_restart_modal_open = false;
+  }
+
+  function open_restart_modal() {
+    is_overlay_open.set(true);
+    is_restart_modal_open = true;
+  }
 
   function select(event: CustomEvent) {
     game.move(event.detail.index)
@@ -45,12 +74,10 @@
   $: if (!$game.is_playing) {
     is_overlay_open.set(true);
   }
-
-
 </script>
 
 <div>
-  <GameHeader mark={$game.current_mark} />
+  <GameHeader on:restart={open_restart_modal} mark={$game.current_mark} />
   <section>
     <Board board={$game.board} disabled={!$game.is_playing} on:select={select} />
   </section>
@@ -60,7 +87,9 @@
 {#if $is_overlay_open }
   <Overlay>
     {#if !$game.is_playing }
-      <OverlayGameEnd feedback={create_feedback()} winner={$game.winner} />
+      <OverlayGameEnd onQuit={quit_game} onNext={next_game} feedback={create_feedback()} winner={$game.winner} />
+    {:else if is_restart_modal_open }
+      <OverlayRestart onPositive={restart_game} onNegative={cancel} />
     {/if}
   </Overlay>
 {/if}

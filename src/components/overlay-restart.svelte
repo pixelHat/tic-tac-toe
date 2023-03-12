@@ -1,6 +1,9 @@
 <script lang="ts">
   import Button from "./button.svelte";
   import Heading from "./heading.svelte";
+
+  export let onPositive: (ev: CustomEvent<any>) => void;
+  export let onNegative: (ev: CustomEvent<any>) => void;
 </script>
 
 <div class="container">
@@ -10,8 +13,8 @@
     </div>
   </Heading>
   <div class="buttons">
-    <Button><span class="padding">NO, CANCEL</span></Button>
-    <Button type="primary"><span class="padding">YES, RESTART</span></Button>
+    <Button on:click={onNegative}><span class="padding">NO, CANCEL</span></Button>
+    <Button on:click={onPositive} type="primary"><span class="padding">YES, RESTART</span></Button>
   </div>
 </div>
 

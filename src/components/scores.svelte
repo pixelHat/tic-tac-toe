@@ -5,8 +5,8 @@
 
 <section>
   <Score title="x (YOU)" score={$x_wins} color="blue" />
-  <Score title="ties" score={$o_wins} color="silver" />
-  <Score title="o (CPU)" score={$ties} color="yellow" />
+  <Score title="ties" score={$ties} color="silver" />
+  <Score title="o (CPU)" score={$o_wins} color="yellow" />
 </section>
 
 <style>

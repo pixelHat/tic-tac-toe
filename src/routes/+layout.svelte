@@ -39,6 +39,10 @@
     background: transparent;
     color: inherit;
   }
+  :global(a) {
+    color: inherit;
+    text-decoration: none;
+  }
 
   @media (min-width: 460px) {
     main div {

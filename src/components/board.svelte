@@ -9,7 +9,6 @@
   const dispatch = createEventDispatcher();
 
   function click(index: number) {
-    console.log(disabled)
     if (disabled) return;
     dispatch('select', { index });
   }

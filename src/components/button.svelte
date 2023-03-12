@@ -1,11 +1,19 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
+
   export let type: "primary"|"secondary"|"" = "";
   export let fixedSize: boolean = false;
   export let size: "xs"|"lg" = "lg";
   $: className = `${type} ${size}`
+
+  const dispatch = createEventDispatcher();
+
+  function click() {
+    dispatch('click');
+  }
 </script>
 
-<button class={className} class:fixed={fixedSize}>
+<button on:click={click} class={className} class:fixed={fixedSize}>
   <slot></slot>
 </button>
 

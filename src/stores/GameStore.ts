@@ -35,6 +35,13 @@ export default class TicTacToe {
     this.store.set(this);
   }
 
+  restart() {
+    this.is_playing = true;
+    this.current_mark = "x";
+    this._board = new Array(9).fill(" ") as Board;
+    this.winner = null;
+  }
+
   private swap_mark() {
     this.current_mark = this.current_mark === "x" ? "o" : "x";
   }

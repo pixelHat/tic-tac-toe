@@ -7,6 +7,8 @@
   import IconX from "./icon-x.svelte";
   import Text from "./text.svelte";
 
+  export let onNext: (ev: CustomEvent<any>) => void;
+  export let onQuit: (ev: CustomEvent<any>) => void;
   export let feedback: Feedback;
   export let winner: Mark|null;
 
@@ -35,8 +37,8 @@
     </div>
   </Heading>
   <div class="buttons">
-    <Button><span class="padding">QUIT</span></Button>
-    <Button type="primary"><span class="padding">NEXT ROUND</span></Button>
+    <Button on:click={onQuit}><span class="padding">QUIT</span></Button>
+    <Button on:click={onNext} type="primary"><span class="padding">NEXT ROUND</span></Button>
   </div>
 </div>
 
