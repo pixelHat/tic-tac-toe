@@ -35,16 +35,16 @@
     <section class="picker">
       <button class:selected={is_x_selected} on:click={() => select_mark("x")}>
         {#if is_x_selected }
-          <IconOutlineX color="silver" size="32" />
+          <IconOutlineX color="silver" />
         {:else }
-          <IconX size="32" />
+          <IconX />
         {/if}
       </button>
       <button class:selected={!is_x_selected} on:click={() => select_mark("o")}>
         {#if !is_x_selected }
-          <IconOutlineO color="silver" size="32"/>
+          <IconOutlineO color="silver" />
         {:else}
-          <IconO size="32" />
+          <IconO />
         {/if}
       </button>
     </section>

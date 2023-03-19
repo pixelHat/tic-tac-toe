@@ -9,16 +9,20 @@
   $: two_players = `/game?player1mark=${player1mark}&multiplayer=true`;
 </script>
 
-<img src="/logo.svg" alt="">
-<section class="pick-card">
-  <PickCard on:change={(event) => player1mark = event.detail.value} selected={player1mark} />
-</section>
-<section class="buttons">
-  <Button type="primary">
-      <a href={vs_cpu}>NEW GAME (VS CPU)</a>
-  </Button>
-  <Button type="secondary"><a href={two_players}>NEW GAME  (VS PLAYER)</a></Button>
-</section>
+<div class="container">
+  <div>
+    <img src="/logo.svg" alt="">
+    <section class="pick-card">
+      <PickCard on:change={(event) => player1mark = event.detail.value} selected={player1mark} />
+    </section>
+    <section class="buttons">
+      <Button type="primary">
+          <a href={vs_cpu}>NEW GAME (VS CPU)</a>
+      </Button>
+      <Button type="secondary"><a href={two_players}>NEW GAME  (VS PLAYER)</a></Button>
+    </section>
+  </div>
+</div>
 
 <style>
   img {
@@ -51,7 +55,20 @@
     }
   }
 
-  :global(body > div > main) {
-    justify-content: center;
+  .container {
+    --svg-width: 2rem;
+    --svg-height: 2rem;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+  }
+  .container > div {
+    width: 100%;
+  }
+  @media (min-width: 460px) {
+    .container {
+      min-width: 460px;
+      margin-inline: auto;
+    }
   }
 </style>

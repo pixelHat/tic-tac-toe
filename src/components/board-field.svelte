@@ -18,6 +18,9 @@
     else if (cell === "x") color = "blue";
     else if (cell === "o") color = "yellow";
   }
+  $: {
+    if (!$game.is_playing) hover = false;
+  }
   </script>
 
 <Box {color}>
@@ -45,10 +48,18 @@
 
 <style>
   div {
+    --svg-width: 40px;
+    --svg-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     cursor: pointer;
+  }
+  @media (min-width: 460px) {
+    div {
+      --svg-width: 64px;
+      --svg-height: 64px;
+    }
   }
 </style>

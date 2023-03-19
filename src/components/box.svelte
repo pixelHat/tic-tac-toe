@@ -1,6 +1,6 @@
 <script lang="ts">
   export let size: "xs"|"lg" = "lg";
-  export let color: "yellow"|"blue"|undefined = undefined;
+  export let color: "yellow"|"blue"|"" = "";
   $: className = `${size} ${color}`
 </script>
 

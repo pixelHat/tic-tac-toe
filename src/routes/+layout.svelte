@@ -1,7 +1,5 @@
 <main>
-  <div>
-    <slot />
-  </div>
+  <slot />
 </main>
 
 <style>
@@ -41,12 +39,5 @@
   :global(a) {
     color: inherit;
     text-decoration: none;
-  }
-
-  @media (min-width: 460px) {
-    main div {
-      min-width: 460px;
-      margin-inline: auto;
-    }
   }
 </style>

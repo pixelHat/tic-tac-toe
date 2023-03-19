@@ -19,7 +19,6 @@
   const first_player_mark: Mark = params.get("player1mark") === "x" ? "x" : "o";
 
   let game = GameStore.getInstance();
-
   let is_restart_modal_open = false;
 
   onMount(new_game);
@@ -115,5 +114,4 @@
   section:nth-child(2) {
     margin-block-start: 4rem;
   }
-
 </style>

@@ -15,7 +15,9 @@
 
 <section>
   <img src="/logo.svg" alt="">
-  <CurrentMark {mark} />
+  <div class="middle">
+    <CurrentMark {mark} />
+  </div>
   <div class="button">
     <Button on:click={restart} fixedSize size="xs"><img src="/icon-restart.svg" alt="restart button" /></Button>
   </div>
@@ -23,6 +25,8 @@
 
 <style>
   section{
+    --image-size: 72px;
+    --restart-button-size: 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,7 +34,10 @@
     color: var(--clr-silver);
   }
   .button {
-    width: 2.5rem;
+    width: var(--restart-button-size);
     height: 2.5rem;
+  }
+  .middle {
+    margin-inline-start: calc(-1 * calc(var(--image-size) - var(--restart-button-size)) / 2);
   }
 </style>

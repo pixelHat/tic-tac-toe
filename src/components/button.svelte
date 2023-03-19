@@ -55,10 +55,10 @@
   }
   .lg {
     --border-bottom: 8px;
-    --border-radius: 10px;
+    --border-radius: 15px;
   }
   .xs {
     --border-bottom: 4px;
-    --border-radius: 5px;
+    --border-radius: 10px;
   }
 </style>

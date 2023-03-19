@@ -1,9 +1,8 @@
 <script lang="ts">
-  export let size = "64";
   export let color:"silver"|"yellow" = "yellow";
 </script>
 
-<svg class={color} width={size} height={size} viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+<svg class={color} viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
   <path d="M33 1c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C15.327 65 1 50.673 1 33 1 15.327 15.327 1 33 1Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z" stroke="currentColor" stroke-width="2"/>
 </svg>
 
@@ -11,6 +10,8 @@
   svg {
     color: var(--clr-light-yellow);
     fill: var(--clr-semi-dark-navy);
+    width: var(--svg-width, 64px);
+    height: var(--svg-height, 64px);
   }
   .silver {
     color: var(--clr-silver);

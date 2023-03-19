@@ -31,15 +31,15 @@
       {#if feedback === Feedback.DRAW}
         ROUND TIED
       {:else if winner === "o" }
-        <IconO size="30" /> TAKES THE ROUND
+        <IconO /> TAKES THE ROUND
       {:else}
-        <IconX size="30" /> TAKES THE ROUND
+        <IconX /> TAKES THE ROUND
       {/if}
     </div>
   </Heading>
   <ButtonGroup>
-    <Button on:click={onQuit}><span class="padding">QUIT</span></Button>
-    <Button on:click={onNext} type="primary"><span class="padding">NEXT ROUND</span></Button>
+    <Button on:click={onQuit} size="xs"><span class="padding">QUIT</span></Button>
+    <Button on:click={onNext} size="xs" type="primary"><span class="padding">NEXT ROUND</span></Button>
   </ButtonGroup>
 </div>
 
@@ -63,14 +63,25 @@
     color: var(--clr-silver);
   }
   .x {
+    --svg-width: 1.75rem;
+    --svg-height: 1.75rem;
     color: var(--clr-light-blue);
   }
   .o {
+    --svg-width: 1.875rem;
+    --svg-height: 1.875rem;
     color: var(--clr-light-yellow);
   }
   .buttons {
     display: flex;
     column-gap: 1rem;
     margin-block-start: 1.5rem;
+  }
+
+  @media (min-width: 460px) {
+    .x, .o {
+      --svg-width: 4rem;
+      --svg-height: 4rem;
+    }
   }
 </style>

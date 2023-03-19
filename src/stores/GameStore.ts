@@ -13,7 +13,6 @@ export default class GameStore {
 
   public is_playing = true;
   public winner:Mark|null = null;
-  public winner_squares:number[] = [];
 
   private constructor() {
     this.store = writable(this);
@@ -59,7 +58,6 @@ export default class GameStore {
   restart() {
     this.is_playing = true;
     this.winner = null;
-    this.winner_squares = [];
     this.ticTacToe.restart();
     this.store.set(this);
   }
@@ -74,6 +72,11 @@ export default class GameStore {
 
   get current_mark() {
     return this.ticTacToe.current_mark;
+  }
+
+  get winner_squares() {
+    if (!this.ticTacToe.winner) return [];
+    return this.ticTacToe.squares_winner;
   }
 
   private validate() {

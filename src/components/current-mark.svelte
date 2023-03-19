@@ -10,9 +10,9 @@
 <Box size="xs">
   <div class="current-mark">
     {#if mark === "x" }
-      <IconX size={"16"} />
+      <IconX />
     {:else }
-      <IconO size={"16"} />
+      <IconO />
     {/if}
     TURN
   </div>
@@ -20,6 +20,8 @@
 
 <style>
   .current-mark {
+    --svg-width: 16px;
+    --svg-height: 16px;
     padding-block: 0.625rem;
     display: flex;
     align-items: center;
