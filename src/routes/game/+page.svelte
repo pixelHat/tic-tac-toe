@@ -10,11 +10,12 @@
   import { o_wins, ties, x_wins } from "../../stores/ScoreStore";
   import type { Mark } from "../../types/Board";
   import { Feedback } from "../../types/Winner";
-
-  import { page } from "$app/stores";
   import { onMount } from "svelte";
+  import { base } from '$app/paths';
+  import { goto } from '$app/navigation';
 
-  const params = $page.url.searchParams;
+
+  const params = new URLSearchParams(window.location.search);
   const is_single_play = params.get("multiplayer") == null;
   const first_player_mark: Mark = params.get("player1mark") === "x" ? "x" : "o";
 
@@ -29,7 +30,7 @@
   }
 
   function quit_game() {
-    window.location.href = "/";
+    goto(base)
   }
 
   function restart_game() {

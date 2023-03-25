@@ -2,16 +2,17 @@
   import Button from "../components/button.svelte";
   import PickCard from "../components/pick-card.svelte";
   import type { Mark } from "../types/Board";
+  import { assets, base } from '$app/paths';
 
   let player1mark: Mark = "x";
 
-  $: vs_cpu = `/game?player1mark=${player1mark}`;
-  $: two_players = `/game?player1mark=${player1mark}&multiplayer=true`;
+  $: vs_cpu = `${base}/game?player1mark=${player1mark}/`;
+  $: two_players = `${base}/game?player1mark=${player1mark}&multiplayer=true/`;
 </script>
 
 <div class="container">
   <div>
-    <img src="/logo.svg" alt="">
+    <img src="{assets}/logo.svg" alt="">
     <section class="pick-card">
       <PickCard on:change={(event) => player1mark = event.detail.value} selected={player1mark} />
     </section>

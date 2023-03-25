@@ -3,6 +3,7 @@
   import type { Mark } from "../types/Board";
   import Button from "./button.svelte";
   import CurrentMark from "./current-mark.svelte";
+  import { assets } from '$app/paths';
   export let mark: Mark;
 
   const dispatch = createEventDispatcher();
@@ -14,12 +15,12 @@
 </script>
 
 <section>
-  <img src="/logo.svg" alt="">
+  <img src="{assets}/logo.svg" alt="">
   <div class="middle">
     <CurrentMark {mark} />
   </div>
   <div class="button">
-    <Button on:click={restart} fixedSize size="xs"><img src="/icon-restart.svg" alt="restart button" /></Button>
+    <Button on:click={restart} fixedSize size="xs"><img src="{assets}/icon-restart.svg" alt="restart button" /></Button>
   </div>
 </section>
 
