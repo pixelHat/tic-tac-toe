@@ -1,6 +1,7 @@
 <script lang="ts">
   import Heading from "./heading.svelte";
   import Text from "./text.svelte";
+
   export let title: string;
   export let score: number;
   export let color: 'blue'|'yellow'|'silver';

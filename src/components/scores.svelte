@@ -1,12 +1,20 @@
-<script>
+<script lang="ts">
   import { x_wins, o_wins, ties } from "../stores/ScoreStore";
   import Score from "./score.svelte";
+
+  type Players = "P1" | "P2" | "YOU" | "CPU";
+
+  export let xPlayer: Players;
+  export let oPlayer: Players ;
+
+  $: xTitle = `x (${xPlayer})`;
+  $: oTitle = `o (${oPlayer})`;
 </script>
 
 <section>
-  <Score title="x (YOU)" score={$x_wins} color="blue" />
+  <Score title={xTitle} score={$x_wins} color="blue" />
   <Score title="ties" score={$ties} color="silver" />
-  <Score title="o (CPU)" score={$o_wins} color="yellow" />
+  <Score title={oTitle} score={$o_wins} color="yellow" />
 </section>
 
 <style>

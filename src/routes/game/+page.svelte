@@ -85,14 +85,23 @@
   $: if (!$game.is_playing) {
     is_overlay_open.set(true);
   }
+
+  function mark_player_title(mark: Mark) {
+    if (is_single_play) {
+      if (first_player_mark === mark) return "YOU";
+      return "CPU"
+    }
+    if (first_player_mark === mark) return "P1";
+    return "P2";
+  }
 </script>
 
 <div>
-  <GameHeader on:restart={open_restart_modal} mark={$game.current_mark} />
+  <GameHeader mark={$game.current_mark} on:restart={open_restart_modal} />
   <section>
     <Board board={$game.board} disabled={!$game.is_playing} on:select={select} />
   </section>
-  <Scores />
+  <Scores xPlayer={mark_player_title("x")} oPlayer={mark_player_title("o")} />
 </div>
 
 {#if $is_overlay_open }
@@ -113,5 +122,10 @@
   }
   section:nth-child(2) {
     margin-block-start: 4rem;
+  }
+  @media (min-width: 460px) {
+    div {
+      margin-block-start: 8.75rem;
+    }
   }
 </style>
